@@ -40,7 +40,7 @@ export default function RegisterCard() {
     if (!result.success) toast("User registration failed");
 
     if (result.success) toast("User Registed successfully");
-    router.push("/success");
+    router.push("/register/success");
   };
 
   return (
@@ -102,7 +102,13 @@ export default function RegisterCard() {
             </div>
           </div>
           <div className="flex justify-center items-center mt-4">
-            <Button type="submit">Register</Button>
+            <Button
+              type="submit"
+              variant="outline"
+              className="font-semibold bg-gray-500 text-gray-50 hover:bg-gray-700 hover:text-white"
+            >
+              Register
+            </Button>
           </div>
         </form>
       </CardContent>

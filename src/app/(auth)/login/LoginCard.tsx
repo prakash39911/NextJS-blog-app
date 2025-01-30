@@ -17,9 +17,12 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { loginSchameType, loginSchema } from "@/lib/schema/loginSchama";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 export default function LoginCard() {
+  const session = useSession();
+  console.log(session);
+
   const router = useRouter();
 
   const {
@@ -39,9 +42,9 @@ export default function LoginCard() {
     });
 
     if (signInResponse?.ok) {
-      toast("Login Successfull");
-      router.push("/");
+      router.push("/allblogs");
       router.refresh();
+      toast("Login Successfull");
     } else {
       toast("Something went wrong");
     }
@@ -93,7 +96,13 @@ export default function LoginCard() {
             </div>
           </div>
           <div className="flex justify-center items-center mt-4">
-            <Button type="submit">Login</Button>
+            <Button
+              type="submit"
+              variant="outline"
+              className="font-semibold bg-gray-500 text-gray-50 hover:bg-gray-700 hover:text-white"
+            >
+              Login
+            </Button>
           </div>
         </form>
       </CardContent>

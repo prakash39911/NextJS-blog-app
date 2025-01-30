@@ -1,13 +1,16 @@
+"use client";
+
 import { ReactNode } from "react";
-import Navbar from "./Navbar";
 import { Toaster } from "./ui/sonner";
+import { SessionProvider } from "next-auth/react";
 
 export default function Provider({ children }: { children: ReactNode }) {
   return (
-    <div>
-      <Navbar />
-      {children}
-      <Toaster />
-    </div>
+    <>
+      <SessionProvider>
+        {children}
+        <Toaster />
+      </SessionProvider>
+    </>
   );
 }

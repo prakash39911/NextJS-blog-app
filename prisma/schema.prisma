@@ -14,14 +14,16 @@ datasource db {
 }
 
 model User {
-  id              String    @id @default(cuid())
+  id              String       @id @default(cuid())
   name            String
-  email           String    @unique
+  email           String       @unique
   password        String
   emailVerified   DateTime?
-  profileComplete Boolean   @default(false)
+  profileComplete Boolean      @default(false)
+  createdAt       DateTime     @default(now())
   blogs           Blog[]
-  role            Role      @default(MEMBER)
+  role            Role         @default(MEMBER)
+  permissions     permission[]
   profile         Profile?
 }
 
@@ -34,20 +36,28 @@ model Profile {
 }
 
 model Blog {
-  id         String   @id @default(cuid())
-  userId     String   @unique
-  title      String
-  content    String
-  image      String?
-  video      String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  published  Boolean  @default(false)
-  isApproved Boolean  @default(false)
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id              String   @id @default(cuid())
+  userId          String
+  title           String
+  content         String
+  image           String?
+  video           String?
+  image_public_id String?
+  video_public_id String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  published       Boolean  @default(false)
+  isApproved      Boolean  @default(false)
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum Role {
   ADMIN
   MEMBER
+}
+
+enum permission {
+  CREATE
+  EDIT
+  DELETE
 }

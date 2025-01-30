@@ -1,32 +1,41 @@
 import React from "react";
 import NavItems from "./NavItems";
-import { FaBlog } from "react-icons/fa";
 import LoginButton from "./LoginButton";
 import RegisterButton from "./RegisterButton";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import ProfileDropDown from "./ProfileDropDown";
+import BlogLogo from "./BlogLogo";
 
 export default async function Navbar() {
   const session = await getServerSession(authOptions);
+  const isAdmin = session?.user.role === "ADMIN";
+
+  const memberLink = [
+    { label: "All Blogs", href: "/allblogs" },
+    { label: "Trending", href: "/trending" },
+  ];
+
+  const adminLink = [
+    { label: "Blog Management", href: "/admin/blogmanagement" },
+    { label: "User Management", href: "/admin/usermanagement" },
+  ];
+
+  const links = isAdmin ? adminLink : memberLink;
 
   return (
     <div className="bg-gray-600 p-5">
       <div className="flex flex-row justify-between items-center mx-8">
-        <div>
-          <div className="flex flex-row gap-2 items-center cursor-pointer">
-            <span>
-              <FaBlog className="text-gray-200" size={28} />
-            </span>
-            <span className="font-bold text-4xl text-gray-200">Blog</span>
-          </div>
-        </div>
-        <div>
-          <NavItems />
+        <BlogLogo />
+        <div className="flex flex-row gap-6">
+          {session &&
+            links.map((link) => (
+              <NavItems key={link.label} href={link.href} label={link.label} />
+            ))}
         </div>
         <div>
           {session ? (
-            <ProfileDropDown />
+            <ProfileDropDown sessionData={session} />
           ) : (
             <div className="flex flex-row gap-3">
               <LoginButton />

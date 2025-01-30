@@ -8,25 +8,21 @@ import Link from "next/link";
 
 import React from "react";
 
-export default function NavItems() {
+export default function NavItems({
+  label,
+  href,
+}: {
+  label: string;
+  href: string;
+}) {
   return (
     <div>
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem className="flex flex-row gap-6 items-center text-xl text-gray-300">
-            <Link href="/allblogs" legacyBehavior passHref>
+            <Link href={href} legacyBehavior passHref>
               <NavigationMenuLink className="bg-none">
-                All Blogs
-              </NavigationMenuLink>
-            </Link>
-            <Link href="/trending" legacyBehavior passHref>
-              <NavigationMenuLink className="bg-none">
-                Trending
-              </NavigationMenuLink>
-            </Link>
-            <Link href="/alltimefav" legacyBehavior passHref>
-              <NavigationMenuLink className="bg-none">
-                All Time Fav
+                {label}
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
