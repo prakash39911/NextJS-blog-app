@@ -11,6 +11,7 @@ type blogType = {
   video_public_id: string | null;
   createdAt: Date;
   isApproved: boolean;
+  published: boolean;
 };
 
 type userType = {
@@ -19,4 +20,34 @@ type userType = {
   email: string;
   role: "ADMIN" | "MEMBER";
   permissions: string[];
+};
+
+type ticketType = {
+  id: string;
+  issue: string;
+  description: string;
+  createdAt: Date;
+  resolved: boolean;
+  user: {
+    email: string;
+  };
+};
+
+type userTicketType = {
+  issue: string;
+  description: string;
+  id: string;
+  createdAt: Date;
+  resolved: boolean;
+};
+
+type userBlogType = {
+  id: string;
+  createdAt: Date;
+  title: string;
+  image: string | null;
+  image_public_id: string | null;
+  updatedAt: Date;
+  published: boolean;
+  isApproved: boolean;
 };

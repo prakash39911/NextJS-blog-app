@@ -6,14 +6,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import GoToAllBlogsButton from "@/app/(createpost)/createpost/success/GoToAllBlogsButton";
 
-export default function SuccessMessage({
+export default function SuccessMessageCard({
   title,
   description,
+  children,
 }: {
   title: string;
   description: string;
+  children?: React.ReactNode;
 }) {
   return (
     <div className="flex items-center justify-center vertical-center">
@@ -23,7 +24,7 @@ export default function SuccessMessage({
           <CardDescription>{description}</CardDescription>
         </CardHeader>
         <CardContent className="flex justify-center ">
-          <GoToAllBlogsButton />
+          {children && children}
         </CardContent>
       </Card>
     </div>

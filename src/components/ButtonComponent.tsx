@@ -7,6 +7,7 @@ type Props = {
   cssClass?: string;
   reactIcon?: IconType; // Icon component passed dynamically
   btnText: string;
+  isDisabled?: boolean;
 };
 
 export default function ButtonComponent({
@@ -14,9 +15,15 @@ export default function ButtonComponent({
   reactIcon: Icon, // Destructure and rename for clarity
   cssClass,
   onButtonClick,
+  isDisabled,
 }: Props) {
   return (
-    <Button onClick={onButtonClick} variant="outline" className={cssClass}>
+    <Button
+      onClick={onButtonClick}
+      variant="outline"
+      className={cssClass}
+      disabled={isDisabled}
+    >
       {Icon && <Icon />} {/* Render the icon if provided */}
       {btnText}
     </Button>

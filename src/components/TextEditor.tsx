@@ -6,11 +6,8 @@ import TextAlign from "@tiptap/extension-text-align";
 import ToolBar from "./ToolBar";
 import Highlight from "@tiptap/extension-highlight";
 import ImageResize from "tiptap-extension-resize-image";
-import { useFormStore } from "@/lib/FormStore";
 
 export default function TextEditor({ content, onChange }: any) {
-  const { setContent } = useFormStore();
-
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -42,7 +39,6 @@ export default function TextEditor({ content, onChange }: any) {
       },
     },
     onUpdate: ({ editor }) => {
-      console.log(editor.getHTML());
       onChange(editor.getHTML());
     },
     enableCoreExtensions: true,

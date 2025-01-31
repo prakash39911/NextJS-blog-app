@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { SwitchComponent } from "./SwitchComponent";
+import { SwitchComponent } from "../../../components/SwitchComponent";
 import {
   ToggleCreatePermission,
   ToggleDeletePermission,
@@ -56,7 +56,7 @@ export default function EachUserCard({ user }: { user: userType }) {
           <LoadingSpinner size={7} />
         ) : (
           <SwitchComponent
-            userPermitted={isCreatePermitted}
+            isChecked={isCreatePermitted}
             idText={"create"}
             labelText={"Create"}
             onChange={onCreateChange}
@@ -69,7 +69,7 @@ export default function EachUserCard({ user }: { user: userType }) {
           <LoadingSpinner size={7} />
         ) : (
           <SwitchComponent
-            userPermitted={isEditPermitted}
+            isChecked={isEditPermitted}
             idText={"edit"}
             labelText={"Edit"}
             onChange={onEditChange}
@@ -82,7 +82,7 @@ export default function EachUserCard({ user }: { user: userType }) {
           <LoadingSpinner size={7} />
         ) : (
           <SwitchComponent
-            userPermitted={isDeletePermitted}
+            isChecked={isDeletePermitted}
             idText={"delete"}
             labelText={"Delete"}
             onChange={onDeleteChange}

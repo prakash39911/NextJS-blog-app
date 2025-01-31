@@ -1,4 +1,4 @@
-"use Client";
+"use client";
 
 import React from "react";
 import {
@@ -13,8 +13,10 @@ import AvatarComponent from "./AvatarComponent";
 import LogOutUser from "./LogOutUser";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function ProfileDropDown({ sessionData }: any) {
+  const router = useRouter();
   const isAdmin = sessionData?.user?.role === "ADMIN";
 
   return (
@@ -48,7 +50,14 @@ export default function ProfileDropDown({ sessionData }: any) {
               {isAdmin ? "Hello Admin" : `Hello ${sessionData?.user.name}`}
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <DropdownMenuItem>Edit Profile</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => router.push("/createticket")}>
+              Create Ticket
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => router.push("/alltickets")}>
+              View Tickets
+            </DropdownMenuItem>
+
             <DropdownMenuItem className="text-red-700">
               <LogOutUser />
             </DropdownMenuItem>

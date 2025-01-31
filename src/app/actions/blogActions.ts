@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/PrismaClient";
+import { getCurrentUserId } from "./authActions";
 
 export async function getAllBlog() {
   try {
@@ -15,11 +16,15 @@ export async function getAllBlog() {
         video_public_id: true,
         createdAt: true,
         isApproved: true,
+        published: true,
         user: {
           select: {
             name: true,
           },
         },
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     });
     return allBlogs;
@@ -56,3 +61,32 @@ export async function getBlogforID(blogid: string) {
     console.log(error);
   }
 }
+
+export const getAllBlogsForUserId = async () => {
+  try {
+    const userId = await getCurrentUserId();
+
+    const allBlogs = await prisma.blog.findMany({
+      where: {
+        userId,
+      },
+      select: {
+        id: true,
+        title: true,
+        image: true,
+        image_public_id: true,
+        updatedAt: true,
+        createdAt: true,
+        published: true,
+        isApproved: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return allBlogs;
+  } catch (error) {
+    console.log(error);
+  }
+};

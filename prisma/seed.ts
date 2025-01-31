@@ -11,6 +11,7 @@ async function seedAdmin() {
       emailVerified: new Date(),
       password: await bcrypt.hash("password", 10),
       role: "ADMIN",
+      permissions: ["CREATE", "EDIT", "DELETE"],
     },
   });
 }

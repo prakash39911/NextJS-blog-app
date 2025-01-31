@@ -13,18 +13,22 @@ export default async function Navbar() {
 
   const memberLink = [
     { label: "All Blogs", href: "/allblogs" },
-    { label: "Trending", href: "/trending" },
+    {
+      label: "My Blogs",
+      href: "/myblogs",
+    },
   ];
 
   const adminLink = [
     { label: "Blog Management", href: "/admin/blogmanagement" },
     { label: "User Management", href: "/admin/usermanagement" },
+    { label: "Tickets", href: "/admin/ticketmanagement" },
   ];
 
   const links = isAdmin ? adminLink : memberLink;
 
   return (
-    <div className="bg-gray-600 p-5">
+    <div className="bg-gray-600 p-4">
       <div className="flex flex-row justify-between items-center mx-8">
         <BlogLogo />
         <div className="flex flex-row gap-6">

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import SuccessMessage from "@/components/SuccessMessage";
+import SuccessMessage from "@/components/SuccessMessageCard";
 
 export default function SuccessPage() {
   return (

@@ -25,6 +25,7 @@ model User {
   role            Role         @default(MEMBER)
   permissions     permission[]
   profile         Profile?
+  ticket          Ticket[]
 }
 
 model Profile {
@@ -49,6 +50,16 @@ model Blog {
   published       Boolean  @default(false)
   isApproved      Boolean  @default(false)
   user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Ticket {
+  id          String   @id @default(cuid())
+  userId      String
+  issue       String
+  description String
+  resolved    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum Role {

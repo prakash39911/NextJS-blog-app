@@ -15,7 +15,7 @@ export default async function AllBlogs() {
     <div className="flex flex-col w-full vertical-center items-center">
       {allBlogs?.map((blog) => (
         <div key={blog.id}>
-          {blog.isApproved && <EachBlogCard blog={blog} />}
+          {blog.isApproved && blog.published && <EachBlogCard blog={blog} />}
         </div>
       ))}
     </div>

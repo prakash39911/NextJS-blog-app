@@ -17,12 +17,9 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { loginSchameType, loginSchema } from "@/lib/schema/loginSchama";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 export default function LoginCard() {
-  const session = useSession();
-  console.log(session);
-
   const router = useRouter();
 
   const {

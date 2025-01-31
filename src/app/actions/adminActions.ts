@@ -164,3 +164,20 @@ export async function ToggleDeletePermission(userId: string) {
     console.log(error);
   }
 }
+
+export async function MarkTicketResolved(ticketId: string) {
+  try {
+    const isResolved = await prisma.ticket.update({
+      where: {
+        id: ticketId,
+      },
+      data: {
+        resolved: true,
+      },
+    });
+
+    return { status: "success", data: isResolved };
+  } catch (error) {
+    console.log(error);
+  }
+}
