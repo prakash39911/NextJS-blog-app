@@ -72,3 +72,13 @@ export async function getAllUserDetails() {
     console.log(error);
   }
 }
+
+export async function getCurrentUserSessionData() {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (session) return session;
+  } catch (error) {
+    console.log(error);
+  }
+}

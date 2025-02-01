@@ -10,9 +10,9 @@ export default function GoToAllBlogsButton() {
   return (
     <div>
       <ButtonComponent
-        btnText="Go to all Blogs"
+        btnText="Go to Your Blogs"
         cssClass="hover:bg-blue-600 hover:text-gray-100 border-2 border-blue-400 text-blue-700 font-bold"
-        onButtonClick={() => router.push("/allblogs")}
+        onButtonClick={() => router.push("/myblogs")}
       />
     </div>
   );

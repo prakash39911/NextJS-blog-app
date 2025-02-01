@@ -9,7 +9,6 @@ import { authOptions } from "@/lib/authOptions";
 export default async function page() {
   const session = await getServerSession(authOptions);
   const permissionArray = session?.user.permissions;
-  console.log(permissionArray);
 
   const cardTitle = [
     "Image",

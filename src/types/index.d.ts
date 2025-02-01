@@ -10,6 +10,7 @@ type blogType = {
   video: string | null;
   video_public_id: string | null;
   createdAt: Date;
+  updatedAt: Date;
   isApproved: boolean;
   published: boolean;
 };

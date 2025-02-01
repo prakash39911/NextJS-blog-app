@@ -17,26 +17,51 @@ import { Input } from "@/components/ui/input";
 import ImageUploadButtonCloudinary from "@/components/ImageUploadButtonCloudinary";
 import { CldImage, CloudinaryUploadWidgetResults } from "next-cloudinary";
 import { useFormStore } from "@/lib/FormStore";
-import { CreatePost, DeleteCloudinaryImage } from "@/app/actions/userActions";
+import { DeleteCloudinaryImage, UpdatePost } from "@/app/actions/userActions";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useEffect } from "react";
 
-export default function CreatePostForm() {
+export default function EditPostForm({ blog }: { blog: blogType }) {
   const router = useRouter();
   const { image, video, title, content, reset } = useFormStore();
   const { setImage, setVideo, setTitle, setContent } = useFormStore();
+
+  useEffect(() => {
+    setImage({
+      public_id: blog.image_public_id as string,
+      url: blog.image as string,
+    });
+    setTitle(blog.title);
+    setContent(blog.content);
+
+    return () => {
+      setImage({
+        public_id: "",
+        url: "",
+      });
+      setTitle("");
+      setContent("");
+    };
+  }, [
+    setContent,
+    setImage,
+    setTitle,
+    blog.image,
+    blog.image_public_id,
+    blog.content,
+    blog.title,
+  ]);
 
   const form = useForm<FormSchemaType>({
     mode: "onChange",
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      content: "",
       title: "",
+      content: "",
     },
   });
 
-  // Set form values from persisted store when component mounts
   useEffect(() => {
     form.setValue("title", title);
     form.setValue("content", content);
@@ -64,21 +89,21 @@ export default function CreatePostForm() {
     };
 
     try {
-      const result = await CreatePost(modifiedData);
+      const result = await UpdatePost(modifiedData, blog.id);
 
       if (result?.error) {
-        toast.error("Blog creation failed");
+        toast.error("Blog Updation failed");
         return;
       }
 
       if (result?.success === "true") {
         reset(); // Reset the store
         form.reset(); // Reset the form
-        router.push("/createpost/success");
-        toast.success("Blog created successfully");
+        router.push("/editpost/success");
+        toast.success("Blog Updated successfully");
       }
     } catch (error) {
-      toast.error("An error occurred while creating the blog");
+      toast.error("An error occurred while updating the blog");
       console.log(error);
     }
   };
@@ -184,7 +209,6 @@ export default function CreatePostForm() {
                     content={field.value}
                     onChange={(value: any) => {
                       field.onChange(value);
-                      setContent(value);
                     }}
                   />
                 </FormControl>

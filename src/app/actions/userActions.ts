@@ -43,6 +43,39 @@ export async function CreatePost(data: FormSchemaType) {
   }
 }
 
+export async function UpdatePost(data: FormSchemaType, blogId: string) {
+  try {
+    const userId = await getCurrentUserId();
+
+    const validatedData = FormSchema.safeParse(data);
+
+    if (!validatedData.success) return { error: "Validation Error" };
+
+    const { title, image, content, image_public_id, video, video_public_id } =
+      validatedData.data;
+
+    const isBlogUpdated = await prisma.blog.update({
+      where: {
+        id: blogId,
+      },
+      data: {
+        userId,
+        title,
+        image,
+        content,
+        image_public_id,
+        video,
+        video_public_id,
+        isApproved: false,
+        published: false,
+      },
+    });
+    return { success: "true", data: isBlogUpdated };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const TogglePublishBlog = async (blogId: string) => {
   try {
     const userId = await getCurrentUserId();

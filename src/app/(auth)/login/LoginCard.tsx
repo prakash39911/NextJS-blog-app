@@ -19,6 +19,8 @@ import { loginSchameType, loginSchema } from "@/lib/schema/loginSchama";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 
+import { getCurrentUserSessionData } from "@/app/actions/authActions";
+
 export default function LoginCard() {
   const router = useRouter();
 
@@ -38,12 +40,23 @@ export default function LoginCard() {
       redirect: false,
     });
 
-    if (signInResponse?.ok) {
-      router.push("/allblogs");
+    if (signInResponse?.error) {
+      console.error("Login failed:", signInResponse.error);
+      return;
+    }
+
+    const session = await getCurrentUserSessionData();
+
+    if (session?.user.role === "ADMIN") {
+      router.push("/admin/blogmanagement");
+      toast("Admin Logged in Successfully");
       router.refresh();
+    }
+
+    if (session?.user.role === "MEMBER") {
+      router.push("/allblogs");
       toast("Login Successfull");
-    } else {
-      toast("Something went wrong");
+      router.refresh();
     }
   };
 

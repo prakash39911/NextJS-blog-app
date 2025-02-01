@@ -15,6 +15,7 @@ export async function getAllBlog() {
         image_public_id: true,
         video_public_id: true,
         createdAt: true,
+        updatedAt: true,
         isApproved: true,
         published: true,
         user: {
@@ -48,6 +49,8 @@ export async function getBlogforID(blogid: string) {
         image_public_id: true,
         video_public_id: true,
         createdAt: true,
+        updatedAt: true,
+        published: true,
         isApproved: true,
         user: {
           select: {

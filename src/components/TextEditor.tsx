@@ -6,6 +6,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import ToolBar from "./ToolBar";
 import Highlight from "@tiptap/extension-highlight";
 import ImageResize from "tiptap-extension-resize-image";
+import { useEffect } from "react";
 
 export default function TextEditor({ content, onChange }: any) {
   const editor = useEditor({
@@ -45,6 +46,12 @@ export default function TextEditor({ content, onChange }: any) {
     editable: true,
     immediatelyRender: false,
   });
+
+  useEffect(() => {
+    if (editor && content) {
+      editor.commands.setContent(content, false); // Update content without history
+    }
+  }, [content, editor]);
 
   return (
     <div>

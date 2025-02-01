@@ -26,8 +26,6 @@ export default function EachBlogView({
   const isEditAllowed = permissionArray.includes("EDIT");
   const isDeleteAllowed = permissionArray.includes("DELETE");
 
-  console.log(isEditAllowed, isDeleteAllowed);
-
   const onPublishedChange = async () => {
     setPublishLoading(true);
     await TogglePublishBlog(blog.id);
@@ -37,6 +35,7 @@ export default function EachBlogView({
 
   const EditUserBlogFn = async (blogId: string, e: React.MouseEvent) => {
     e.stopPropagation();
+    router.replace(`/editpost/${blogId}`);
     router.refresh();
   };
 
@@ -47,7 +46,7 @@ export default function EachBlogView({
   };
 
   return (
-    <div className="w-[1180px] h-[130px] bg-gray-100 rounded-md p-2 ml-1 grid grid-cols-6 gap-2 mt-2">
+    <div className="w-[1180px] h-[150px] bg-gray-200 rounded-md p-2 ml-1 grid grid-cols-6 gap-2 mt-2">
       <div className="col-span-1 bg-gray-300 rounded-md relative">
         {blog.image && (
           <CldImage
@@ -55,8 +54,18 @@ export default function EachBlogView({
             width={600}
             height={400}
             alt="Image"
-            className="absolute w-full h-full rounded-md object-fill"
+            className={clsx(
+              "absolute w-full h-full rounded-md object-fill",
+              isApproved ? "" : "opacity-60"
+            )}
           />
+        )}
+        {isApproved ? (
+          ""
+        ) : (
+          <div className="absolute w-full h-[30px] flex justify-center items-center bg-white/15 bottom-8">
+            <span className="text-white font-bold text-xl">Pending</span>
+          </div>
         )}
       </div>
 
@@ -99,6 +108,7 @@ export default function EachBlogView({
         <div className="flex flex-col gap-2 justify-center items-center">
           <ButtonComponent
             onButtonClick={(e: React.MouseEvent) => {
+              e.stopPropagation();
               router.push(`/blog/${blog.id}`);
             }}
             btnText={"View"}
