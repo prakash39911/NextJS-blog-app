@@ -22,7 +22,7 @@ export default async function Navbar() {
   const adminLink = [
     { label: "Blog Management", href: "/admin/blogmanagement" },
     { label: "User Management", href: "/admin/usermanagement" },
-    { label: "Tickets", href: "/admin/ticketmanagement" },
+    { label: "Ticket Management", href: "/admin/ticketmanagement" },
   ];
 
   const links = isAdmin ? adminLink : memberLink;
