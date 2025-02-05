@@ -93,3 +93,30 @@ export const getAllBlogsForUserId = async () => {
     console.log(error);
   }
 };
+
+export const getAllBlogsForParticularUser = async (userId: string) => {
+  try {
+    const allBlogs = await prisma.blog.findMany({
+      where: {
+        userId,
+      },
+      select: {
+        id: true,
+        title: true,
+        image: true,
+        image_public_id: true,
+        updatedAt: true,
+        createdAt: true,
+        published: true,
+        isApproved: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return allBlogs;
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -32,10 +32,9 @@ export default async function Navbar() {
       <div className="flex flex-row justify-between items-center mx-8">
         <BlogLogo />
         <div className="flex flex-row gap-6">
-          {session &&
-            links.map((link) => (
-              <NavItems key={link.label} href={link.href} label={link.label} />
-            ))}
+          {links.map((link) => (
+            <NavItems key={link.label} href={link.href} label={link.label} />
+          ))}
         </div>
         <div>
           {session ? (

@@ -16,7 +16,7 @@ import { FormSchema, FormSchemaType } from "@/lib/schema/CreatePostFormSchema";
 import { Input } from "@/components/ui/input";
 import ImageUploadButtonCloudinary from "@/components/ImageUploadButtonCloudinary";
 import { CldImage, CloudinaryUploadWidgetResults } from "next-cloudinary";
-import { useFormStore } from "@/lib/FormStore";
+import { useFormStore } from "@/hooks/FormStore";
 import { DeleteCloudinaryImage, UpdatePost } from "@/app/actions/userActions";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";

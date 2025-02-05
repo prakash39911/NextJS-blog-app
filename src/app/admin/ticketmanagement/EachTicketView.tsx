@@ -11,9 +11,13 @@ import { formatDate } from "@/lib/usefulFunctions";
 export default function EachTicketView({ ticket }: { ticket: ticketType }) {
   const router = useRouter();
 
-  const ResolveTicket = async (ticketId: string, e: React.MouseEvent) => {
+  const ResolveTicket = async (
+    ticketId: string,
+    e: React.MouseEvent,
+    userId: string
+  ) => {
     e.stopPropagation();
-    await MarkTicketResolved(ticketId);
+    await MarkTicketResolved(ticketId, userId);
     router.refresh();
   };
 
@@ -53,7 +57,7 @@ export default function EachTicketView({ ticket }: { ticket: ticketType }) {
           <div className="flex justify-center items-center">
             <ButtonComponent
               onButtonClick={(e: React.MouseEvent) =>
-                ResolveTicket(ticket.id, e)
+                ResolveTicket(ticket.id, e, ticket.user.id)
               }
               btnText={"Mark Resolved"}
               cssClass="text-blue-600 border-2 border-blue-400 w-[140px]"

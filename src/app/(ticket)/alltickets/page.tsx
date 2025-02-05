@@ -1,11 +1,11 @@
 import { getTicketsForUser } from "@/app/actions/ticketActions";
 import React from "react";
-import { EachTicketView } from "./EachTicketView";
+import TicketWrapper from "./TicketWrapper";
 
 export default async function AllTickets() {
   const allTickets = await getTicketsForUser();
 
-  if (allTickets && allTickets.length === 0)
+  if (!allTickets || (allTickets && allTickets.length === 0))
     return (
       <div className="flex vertical-center items-center">No Tickets Found</div>
     );
@@ -15,14 +15,7 @@ export default async function AllTickets() {
       <div className="flex w-full justify-start font-bold text-2xl mb-3">
         All Tickets
       </div>
-      <div className="flex flex-wrap gap-5">
-        {allTickets &&
-          allTickets.map((ticket) => (
-            <div key={ticket.id}>
-              <EachTicketView ticket={ticket} />
-            </div>
-          ))}
-      </div>
+      <TicketWrapper allTickets={allTickets} />
     </div>
   );
 }

@@ -30,6 +30,12 @@ export default function EachBlogView({ blog }: { blog: blogType }) {
     router.refresh();
   };
 
+  const EditBlogFn = async (blogId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    router.replace(`/editpost/${blog.id}`);
+    router.refresh();
+  };
+
   return (
     <div
       onClick={() => handleOnClick()}
@@ -63,7 +69,7 @@ export default function EachBlogView({ blog }: { blog: blogType }) {
         {blog.isApproved ? (
           <div className="flex flex-col gap-2 justify-center items-center">
             <ButtonComponent
-              onButtonClick={(e: React.MouseEvent) => ApproveBlogFn(blog.id, e)}
+              onButtonClick={(e: React.MouseEvent) => EditBlogFn(blog.id, e)}
               btnText={"Edit"}
               cssClass="text-green-600 border-2 border-green-400 w-[100px]"
               reactIcon={FaEdit}

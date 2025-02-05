@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { CldImage } from "next-cloudinary";
 import { useRouter } from "next/navigation";
 import { formatDate } from "@/lib/usefulFunctions";
@@ -11,20 +11,37 @@ import { SwitchComponent } from "@/components/SwitchComponent";
 import { deleteUserBlog, TogglePublishBlog } from "../actions/userActions";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import clsx from "clsx";
+import { BlogStore } from "@/hooks/BlogStore";
 
 export default function EachBlogView({
   blog,
   permissionArray,
 }: {
   blog: userBlogType;
-  permissionArray: ["CREATE" | "EDIT" | "DELETE"];
+  permissionArray: Array<"CREATE" | "EDIT" | "DELETE">;
 }) {
-  const router = useRouter();
-  const [publishLoading, setPublishLoading] = useState(false);
-  const isApproved = blog?.isApproved;
+  // const blogs = BlogStore((state) => state.blogs);
+  // const currentBlog = blogs.find((b) => b.id === blog.id);
+  // const approved = currentBlog?.isApproved ?? false;
 
-  const isEditAllowed = permissionArray.includes("EDIT");
-  const isDeleteAllowed = permissionArray.includes("DELETE");
+  const updatedBlog = BlogStore((state) => state.updatedBlog);
+  const blogFound = updatedBlog.find((eachBlog) => eachBlog.id === blog.id);
+  const approved = blogFound ? blogFound.isApproved : blog.isApproved;
+
+  const updatedPermissionArray = BlogStore(
+    (state) => state.updatedPermissionArray
+  );
+
+  const finalPermissionArray =
+    JSON.stringify(permissionArray) === JSON.stringify(updatedPermissionArray)
+      ? permissionArray
+      : updatedPermissionArray;
+
+  const router = useRouter();
+  const [publishLoading, setPublishLoading] = React.useState(false);
+
+  const isEditAllowed = finalPermissionArray.includes("EDIT");
+  const isDeleteAllowed = finalPermissionArray.includes("DELETE");
 
   const onPublishedChange = async () => {
     setPublishLoading(true);
@@ -56,11 +73,11 @@ export default function EachBlogView({
             alt="Image"
             className={clsx(
               "absolute w-full h-full rounded-md object-fill",
-              isApproved ? "" : "opacity-60"
+              approved ? "" : "opacity-60"
             )}
           />
         )}
-        {isApproved ? (
+        {approved ? (
           ""
         ) : (
           <div className="absolute w-full h-[30px] flex justify-center items-center bg-white/15 bottom-8">
@@ -74,17 +91,17 @@ export default function EachBlogView({
       </div>
 
       <div className="col-span-1 flex items-center justify-center">
-        {formatDate(blog.createdAt)}
+        {formatDate(blog?.createdAt)}
       </div>
 
       <div className="col-span-1 flex items-center justify-center">
         <div
           className={clsx(
             "",
-            isApproved ? "font-bold text-green-500" : "font-bold text-red-500"
+            approved ? "font-bold text-green-500" : "font-bold text-red-500"
           )}
         >
-          {isApproved ? "Approved" : "Pending"}
+          {approved ? "Approved" : "Pending"}
         </div>
       </div>
 

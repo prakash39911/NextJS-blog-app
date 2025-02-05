@@ -11,9 +11,15 @@ import {
 } from "@/components/ui/card";
 import { formatDate } from "@/lib/usefulFunctions";
 import clsx from "clsx";
+import { TicketStore } from "@/hooks/TicketStore";
 
 export function EachTicketView({ ticket }: { ticket: userTicketType }) {
-  const isResolved = ticket.resolved;
+  const updatedTicket = TicketStore((state) => state.updatedTicket);
+
+  const foundTicket = updatedTicket?.find(
+    (eachTicket) => eachTicket.id === ticket.id
+  );
+  const isResolved = foundTicket ? foundTicket.resolved : ticket.resolved;
 
   return (
     <Card

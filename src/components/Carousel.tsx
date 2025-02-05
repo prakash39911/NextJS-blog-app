@@ -46,6 +46,8 @@ export function CarouselComponent({ allBlogs }: { allBlogs: blogType[] }) {
                           className="object-cover w-full"
                         />
                       )}
+                      <div className="absolute bottom-[-50px] left-0 w-full h-1/3 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
+
                       <div className="absolute w-full h-[70px] flex justify-center items-center bg-white/15 bottom-8">
                         <span className="text-white font-bold text-6xl">
                           Title:{blog.title}

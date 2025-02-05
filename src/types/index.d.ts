@@ -31,6 +31,7 @@ type ticketType = {
   resolved: boolean;
   user: {
     email: string;
+    id: string;
   };
 };
 

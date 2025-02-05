@@ -68,6 +68,7 @@ export async function getAllTickets() {
         user: {
           select: {
             email: true,
+            id: true,
           },
         },
       },

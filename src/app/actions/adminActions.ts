@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/PrismaClient";
+import { pusherServer } from "@/lib/pusher";
 
 export async function ApproveBlog(blogId: string) {
   try {
@@ -11,7 +12,21 @@ export async function ApproveBlog(blogId: string) {
       data: {
         isApproved: true,
       },
+      select: {
+        id: true,
+        userId: true,
+        image: true,
+        image_public_id: true,
+        title: true,
+        isApproved: true,
+      },
     });
+
+    await pusherServer.trigger(
+      `private-${result.userId}`,
+      "blog:approve",
+      result
+    );
 
     return { success: "true", data: result };
   } catch (error) {
@@ -52,25 +67,49 @@ export async function ToggleCreatePermission(userId: string) {
         (value) => value !== "CREATE"
       );
 
-      return prisma.user.update({
+      const updatedvalue = await prisma.user.update({
         where: {
           id: userId,
         },
         data: {
           permissions: finalArray,
         },
+        select: {
+          id: true,
+          permissions: true,
+        },
       });
+
+      await pusherServer.trigger(
+        `private-${userId}`,
+        "create:false",
+        updatedvalue
+      );
+
+      return updatedvalue;
     } else {
       userExistingPermissionArray?.permissions.push("CREATE");
 
-      return prisma.user.update({
+      const updatedValue = await prisma.user.update({
         where: {
           id: userId,
         },
         data: {
           permissions: userExistingPermissionArray?.permissions,
         },
+        select: {
+          id: true,
+          permissions: true,
+        },
       });
+
+      await pusherServer.trigger(
+        `private-${userId}`,
+        "create:true",
+        updatedValue
+      );
+
+      return updatedValue;
     }
   } catch (error) {
     console.log(error);
@@ -96,7 +135,7 @@ export async function ToggleEditPermission(userId: string) {
         (value) => value !== "EDIT"
       );
 
-      return prisma.user.update({
+      const updatedData = await prisma.user.update({
         where: {
           id: userId,
         },
@@ -104,10 +143,20 @@ export async function ToggleEditPermission(userId: string) {
           permissions: finalArray,
         },
       });
+
+      const updatedPermissionArray = updatedData.permissions;
+
+      await pusherServer.trigger(
+        `private-${userId}`,
+        "edit:false",
+        updatedPermissionArray
+      );
+
+      return updatedData;
     } else {
       userExistingPermissionArray?.permissions.push("EDIT");
 
-      return prisma.user.update({
+      const updatedData = await prisma.user.update({
         where: {
           id: userId,
         },
@@ -115,6 +164,16 @@ export async function ToggleEditPermission(userId: string) {
           permissions: userExistingPermissionArray?.permissions,
         },
       });
+
+      const updatedPermissionArray = updatedData.permissions;
+
+      await pusherServer.trigger(
+        `private-${userId}`,
+        "edit:true",
+        updatedPermissionArray
+      );
+
+      return updatedData;
     }
   } catch (error) {
     console.log(error);
@@ -140,7 +199,7 @@ export async function ToggleDeletePermission(userId: string) {
         (value) => value !== "DELETE"
       );
 
-      return prisma.user.update({
+      const updatedData = await prisma.user.update({
         where: {
           id: userId,
         },
@@ -148,10 +207,20 @@ export async function ToggleDeletePermission(userId: string) {
           permissions: finalArray,
         },
       });
+
+      const updatedPermissionArray = updatedData.permissions;
+
+      await pusherServer.trigger(
+        `private-${userId}`,
+        "delete:false",
+        updatedPermissionArray
+      );
+
+      return updatedData;
     } else {
       userExistingPermissionArray?.permissions.push("DELETE");
 
-      return prisma.user.update({
+      const updatedData = await prisma.user.update({
         where: {
           id: userId,
         },
@@ -159,13 +228,23 @@ export async function ToggleDeletePermission(userId: string) {
           permissions: userExistingPermissionArray?.permissions,
         },
       });
+
+      const updatedPermissionArray = updatedData.permissions;
+
+      await pusherServer.trigger(
+        `private-${userId}`,
+        "delete:true",
+        updatedPermissionArray
+      );
+
+      return updatedData;
     }
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function MarkTicketResolved(ticketId: string) {
+export async function MarkTicketResolved(ticketId: string, userId: string) {
   try {
     const isResolved = await prisma.ticket.update({
       where: {
@@ -175,6 +254,12 @@ export async function MarkTicketResolved(ticketId: string) {
         resolved: true,
       },
     });
+
+    await pusherServer.trigger(
+      `private-${userId}`,
+      "ticket:resolved",
+      isResolved
+    );
 
     return { status: "success", data: isResolved };
   } catch (error) {

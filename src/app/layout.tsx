@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Provider from "@/components/Provider";
 import Navbar from "@/components/Navbar";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
 
 export const metadata: Metadata = {
   title: "Blog App",
@@ -13,10 +15,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
+  const userId = session?.user?.id;
+
   return (
     <html lang="en">
       <body>
-        <Provider>
+        <Provider userId={userId}>
           <div>
             <Navbar />
           </div>
