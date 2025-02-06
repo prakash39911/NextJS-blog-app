@@ -5,8 +5,21 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import EachBlogView from "./EachBlogView";
 import CardContainer from "../../../components/CardContainer";
+import { PaginationComponent } from "@/components/PaginationComponent";
+import { usePathname } from "next/navigation";
 
-export default function TabsComponent({ allBlogs }: { allBlogs: blogType[] }) {
+export default function TabsComponent({
+  allBlogs,
+  currentPage,
+  totalPendingBlogPages,
+  totalApprovedBlogPages,
+}: {
+  allBlogs: blogType[];
+  currentPage: number;
+  totalPendingBlogPages: number | undefined;
+  totalApprovedBlogPages: number | undefined;
+}) {
+  const pathname = usePathname();
   const [activeTab, setActiveTab] = React.useState("pending");
 
   const cardTitle = ["Image", "Title", "Author", "Created", "Action"];
@@ -40,7 +53,7 @@ export default function TabsComponent({ allBlogs }: { allBlogs: blogType[] }) {
             Approved
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="pending">
+        <TabsContent value="pending" className=" flex gap-3 flex-col">
           <CardContainer
             cardTitle={cardTitle}
             cssStyle={
@@ -55,8 +68,13 @@ export default function TabsComponent({ allBlogs }: { allBlogs: blogType[] }) {
               );
             })}
           </CardContainer>
+          <PaginationComponent
+            currentPage={currentPage}
+            totalPages={totalPendingBlogPages}
+            pathname={pathname}
+          />
         </TabsContent>
-        <TabsContent value="approved">
+        <TabsContent value="approved" className=" flex gap-3 flex-col">
           <CardContainer
             cardTitle={cardTitle}
             cssStyle={
@@ -71,6 +89,12 @@ export default function TabsComponent({ allBlogs }: { allBlogs: blogType[] }) {
               );
             })}
           </CardContainer>
+
+          <PaginationComponent
+            currentPage={currentPage}
+            totalPages={totalApprovedBlogPages}
+            pathname={pathname}
+          />
         </TabsContent>
       </Tabs>
     </div>

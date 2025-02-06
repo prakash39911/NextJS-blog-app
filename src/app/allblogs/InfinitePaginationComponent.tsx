@@ -7,7 +7,7 @@ import { useSearchParams } from "next/navigation";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ButtonComponent from "@/components/ButtonComponent";
 
-export default function PaginationComponent({
+export default function InfinitePaginationComponent({
   allBlogs,
 }: {
   allBlogs: blogType[];

@@ -3,14 +3,26 @@
 import prisma from "@/lib/PrismaClient";
 import { getCurrentUserId } from "./authActions";
 
-export async function getAllBlog(pageNumber: number) {
+export async function getAllBlog(pageNumber?: number) {
   try {
-    const pageSize = Number(process.env.PAGINATION_RESULT_PER_PAGE);
+    const pageSize = Number(process.env.INFINITE_PAGINATION_RESULT_PER_PAGE);
 
     const page = pageNumber || 1;
     const limit = pageSize || 5;
 
     const skip = (page - 1) * limit;
+
+    const approvedBlogCount = await prisma.blog.count({
+      where: {
+        isApproved: true,
+      },
+    });
+
+    const pendingBlogCount = await prisma.blog.count({
+      where: {
+        isApproved: false,
+      },
+    });
 
     const allBlogs = await prisma.blog.findMany({
       select: {
@@ -37,7 +49,7 @@ export async function getAllBlog(pageNumber: number) {
       skip: skip,
       take: limit,
     });
-    return allBlogs;
+    return { allBlogs, approvedBlogCount, pendingBlogCount };
   } catch (error) {
     console.log(error);
   }
@@ -74,9 +86,20 @@ export async function getBlogforID(blogid: string) {
   }
 }
 
-export const getAllBlogsForUserId = async () => {
+export const getAllBlogsForUserId = async (page: number) => {
+  const pageNumber = page || 1;
+  const pageSize = 4;
+
+  const skip = (pageNumber - 1) * pageSize;
+
   try {
     const userId = await getCurrentUserId();
+
+    const count = await prisma.blog.count({
+      where: {
+        userId,
+      },
+    });
 
     const allBlogs = await prisma.blog.findMany({
       where: {
@@ -95,9 +118,11 @@ export const getAllBlogsForUserId = async () => {
       orderBy: {
         createdAt: "desc",
       },
+      skip,
+      take: pageSize,
     });
 
-    return allBlogs;
+    return { allBlogs, count };
   } catch (error) {
     console.log(error);
   }

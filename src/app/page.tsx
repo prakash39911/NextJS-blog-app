@@ -7,7 +7,9 @@ import { authOptions } from "@/lib/authOptions";
 export default async function Home() {
   const session = await getServerSession(authOptions);
   const isLoggedIn = !!session?.user.id;
-  const allBlogs = await getAllBlog();
+  const data = await getAllBlog();
+
+  const allBlogs = data?.allBlogs;
 
   if (allBlogs && allBlogs.length === 0)
     return <HomePageCard isLoggedIn={isLoggedIn} />;
