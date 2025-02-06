@@ -3,15 +3,15 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { getAllBlog } from "../actions/blogActions";
 import EachBlogCard from "@/components/EachBlogCard";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import ButtonComponent from "@/components/ButtonComponent";
 
 export default function PaginationComponent({
   allBlogs,
 }: {
   allBlogs: blogType[];
 }) {
-  const router = useRouter();
   const loaderRef = useRef(null);
   const searchParams = useSearchParams();
   const [blogs, setBlogs] = useState<blogType[]>(allBlogs);
@@ -60,10 +60,10 @@ export default function PaginationComponent({
     }
 
     return () => observer.disconnect();
-  }, [hasMore, isLoading, pageNumber, router, searchParams]);
+  }, [hasMore, isLoading, pageNumber, searchParams]);
 
   return (
-    <div className="flex flex-col w-full vertical-center items-center gap-4">
+    <div className="flex flex-col w-full vertical-center items-center gap-4 relative">
       {blogs?.map((blog) => (
         <div key={blog.id}>
           {blog.isApproved && blog.published && <EachBlogCard blog={blog} />}
@@ -80,12 +80,21 @@ export default function PaginationComponent({
             </span>
           </div>
         )}
-        <div ref={loaderRef}>
+        <div ref={loaderRef} className="flex flex-col gap-4 items-center">
           {!hasMore && !isLoading && (
             <div className="text-2xl font-bold text-gray-700">
               No More Blogs
             </div>
           )}
+          <div>
+            <ButtonComponent
+              btnText="Go to Top"
+              onButtonClick={() =>
+                window.scrollTo({ top: 0, behavior: "smooth" })
+              }
+              cssClass="fixed bottom-10 right-10 px-4 bg-gray-600 font-bold text-lg text-white hover:bg-gray-800 hover:text-white rounded-lg shadow-lg"
+            />
+          </div>
         </div>
       </div>
     </div>
