@@ -3,8 +3,15 @@
 import prisma from "@/lib/PrismaClient";
 import { getCurrentUserId } from "./authActions";
 
-export async function getAllBlog() {
+export async function getAllBlog(pageNumber: number) {
   try {
+    const pageSize = Number(process.env.PAGINATION_RESULT_PER_PAGE);
+
+    const page = pageNumber || 1;
+    const limit = pageSize || 5;
+
+    const skip = (page - 1) * limit;
+
     const allBlogs = await prisma.blog.findMany({
       select: {
         id: true,
@@ -27,6 +34,8 @@ export async function getAllBlog() {
       orderBy: {
         createdAt: "desc",
       },
+      skip: skip,
+      take: limit,
     });
     return allBlogs;
   } catch (error) {

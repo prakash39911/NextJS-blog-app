@@ -1,23 +1,16 @@
+// app/blog/page.tsx (or wherever your page is located)
 import React from "react";
 import { getAllBlog } from "../actions/blogActions";
-import EachBlogCard from "@/components/EachBlogCard";
+import PaginationComponent from "./PaginationComponent";
 
-export default async function AllBlogs() {
-  const allBlogs = await getAllBlog();
+export default async function BlogPage() {
+  const allBlogs = await getAllBlog(1);
 
-  if (allBlogs?.length === 0)
-    return (
-      <div className="flex items-center justify-center w-full vertical-center text-2xl text-gray-500 font-extralight">
-        No Blog Found
-      </div>
-    );
+  if (!allBlogs) return;
+
   return (
-    <div className="flex flex-col w-full vertical-center items-center">
-      {allBlogs?.map((blog) => (
-        <div key={blog.id}>
-          {blog.isApproved && blog.published && <EachBlogCard blog={blog} />}
-        </div>
-      ))}
+    <div>
+      <PaginationComponent allBlogs={allBlogs} />
     </div>
   );
 }
