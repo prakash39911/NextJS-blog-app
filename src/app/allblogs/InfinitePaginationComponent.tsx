@@ -24,7 +24,8 @@ export default function InfinitePaginationComponent({
   const loadBlogs = useCallback(async (pageNumber: number) => {
     try {
       setIsLoading(true);
-      const newBlogs = await getAllBlog(pageNumber);
+      const data = await getAllBlog(pageNumber);
+      const newBlogs = data?.allBlogs;
       if (!newBlogs) return;
 
       if (pageNumber === 1) {
