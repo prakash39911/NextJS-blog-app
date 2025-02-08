@@ -8,18 +8,19 @@ export default async function page({
   searchParams: Promise<{ page: string }>;
 }) {
   const page = (await searchParams).page ?? 1;
-  const data = await getAllBlog(parseInt(page));
+  const pageSize = process.env.PAGINATION_RESULT_PER_PAGE as string;
+  const data = await getAllBlog(parseInt(page), parseInt(pageSize));
 
   const allBlogs = data?.allBlogs;
   const pendingBlogCount = data?.pendingBlogCount ?? 0;
   const approvedBlogCount = data?.approvedBlogCount ?? 0;
 
   const totalPendingBlogPages = Math.ceil(
-    pendingBlogCount / Number(process.env.PAGINATION_RESULT_PER_PAGE)
+    pendingBlogCount / parseInt(pageSize)
   );
 
   const totalApprovedBlogPages = Math.ceil(
-    approvedBlogCount / Number(process.env.PAGINATION_RESULT_PER_PAGE)
+    approvedBlogCount / parseInt(pageSize)
   );
 
   return (

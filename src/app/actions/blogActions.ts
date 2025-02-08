@@ -3,10 +3,8 @@
 import prisma from "@/lib/PrismaClient";
 import { getCurrentUserId } from "./authActions";
 
-export async function getAllBlog(pageNumber?: number) {
+export async function getAllBlog(pageNumber?: number, pageSize?: number) {
   try {
-    const pageSize = Number(process.env.INFINITE_PAGINATION_RESULT_PER_PAGE);
-
     const page = pageNumber || 1;
     const limit = pageSize || 5;
 

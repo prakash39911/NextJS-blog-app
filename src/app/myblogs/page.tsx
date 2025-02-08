@@ -11,6 +11,7 @@ export default async function page({
   searchParams: Promise<{ page: string }>;
 }) {
   const page = (await searchParams).page ?? 1;
+  const pageSize = process.env.PAGINATION_RESULT_PER_PAGE as string;
 
   const session = await getServerSession(authOptions);
   const permissionArray = session?.user.permissions;
@@ -32,9 +33,7 @@ export default async function page({
       </div>
     );
 
-  const totalPages = Math.ceil(
-    count / Number(process.env.PAGINATION_RESULT_PER_PAGE)
-  );
+  const totalPages = Math.ceil(count / Number(pageSize));
 
   return (
     <div className="container mx-auto py-10 flex justify-center">

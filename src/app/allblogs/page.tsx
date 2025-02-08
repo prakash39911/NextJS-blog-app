@@ -4,9 +4,12 @@ import { getAllBlog } from "../actions/blogActions";
 import InfinitePaginationComponent from "./InfinitePaginationComponent";
 
 export default async function BlogPage() {
-  const data = await getAllBlog(1);
+  const pageSize = process.env.INFINITE_PAGINATION_RESULT_PER_PAGE as string;
+
+  const data = await getAllBlog(1, parseInt(pageSize));
 
   const allBlogs = data?.allBlogs;
+  console.log(allBlogs);
 
   if (!allBlogs) return;
 
