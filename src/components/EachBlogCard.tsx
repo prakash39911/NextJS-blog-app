@@ -15,7 +15,7 @@ export default function EachBlogCard({ blog }: { blog: blogType }) {
   return (
     <div
       onClick={handleOnClick}
-      className="w-full max-w-6xl h-64 mt-5 bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col md:flex-row"
+      className="w-full max-w-4xl h-64 mt-5 bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col md:flex-row"
     >
       <div className="md:w-1/3 h-48 md:h-full relative overflow-hidden">
         {blog.image && (

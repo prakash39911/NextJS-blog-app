@@ -19,7 +19,7 @@ export function CarouselComponent({ allBlogs }: { allBlogs: blogType[] }) {
   const router = useRouter();
   return (
     <Carousel
-      className="w-full h-full"
+      className="w-3/5 md:w-3/4"
       plugins={[
         Autoplay({
           delay: 3000,
@@ -49,7 +49,7 @@ export function CarouselComponent({ allBlogs }: { allBlogs: blogType[] }) {
                       <div className="absolute bottom-[-50px] left-0 w-full h-1/3 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
 
                       <div className="absolute w-full h-[70px] flex justify-center items-center bg-white/15 bottom-8">
-                        <span className="text-white font-bold text-6xl">
+                        <span className="text-white font-bold text-5xl">
                           Title:{blog.title}
                         </span>
                       </div>
