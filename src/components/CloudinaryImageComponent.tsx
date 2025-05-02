@@ -12,7 +12,7 @@ export default function CloudinaryImageComponent({
   return (
     <div>
       {publicId && (
-        <div className="w-[1024px]">
+        <div className="w-[900px]">
           <AspectRatio ratio={16 / 9}>
             <CldImage
               src={publicId}

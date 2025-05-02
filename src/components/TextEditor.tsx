@@ -37,25 +37,24 @@ export default function TextEditor({ content, onChange }: any) {
     editorProps: {
       attributes: {
         class: "min-h-[240px] border rounded-md bg-slate-50 py-2 px-3",
-        spellcheck: "true", // Ensures normal space behavior
-        autocorrect: "on", // Helps prevent text input issues
-        autocomplete: "on",
+        spellcheck: "true",
+      },
+      handleKeyDown: (view, event) => {
+        // Let the browser handle all key events naturally
+        return false;
       },
     },
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
-      editor.on("transaction", ({ transaction }) => {
-        console.log(transaction);
-      });
     },
-    enableCoreExtensions: true,
-    editable: true,
-    immediatelyRender: false,
   });
 
   useEffect(() => {
     if (editor && content) {
-      editor.commands.setContent(content, false); // Update content without history
+      // Only update when content changes from external source
+      if (editor.getHTML() !== content) {
+        editor.commands.setContent(content, false);
+      }
     }
   }, [content, editor]);
 

@@ -34,20 +34,30 @@ export default function ProfileDropDown({ sessionData }: any) {
         <DropdownMenu>
           <DropdownMenuTrigger className="flex items-center">
             <AvatarComponent />
-            <FaCaretDown className="text-white" />
+            <FaCaretDown className="text-black" />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-gray-200">
             <DropdownMenuLabel>
               {isAdmin ? "Hello Admin" : `Hello ${sessionData?.user.name}`}
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Edit Profile</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => router.push("/createticket")}>
-              Create Ticket
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => router.push("/alltickets")}>
-              View Tickets
-            </DropdownMenuItem>
+            {isAdmin && (
+              <div>
+                <DropdownMenuItem onClick={() => router.push("/allblogs")}>
+                  All Blogs
+                </DropdownMenuItem>
+              </div>
+            )}
+            {!isAdmin && (
+              <div>
+                <DropdownMenuItem onClick={() => router.push("/createticket")}>
+                  Create Ticket
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => router.push("/alltickets")}>
+                  View Tickets
+                </DropdownMenuItem>
+              </div>
+            )}
 
             <DropdownMenuItem className="text-red-700">
               <LogOutUser />

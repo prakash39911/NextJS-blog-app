@@ -6,7 +6,11 @@ export default async function Ticket() {
   const allTickets = await getAllTickets();
 
   if (allTickets && allTickets.length === 0)
-    return <div>There is No Data.</div>;
+    return (
+      <div className="flex vertical-center font-semibold justify-center items-center text-xl text-gray-500">
+        There is No Data...
+      </div>
+    );
 
   return (
     <div className="container mx-auto py-10">

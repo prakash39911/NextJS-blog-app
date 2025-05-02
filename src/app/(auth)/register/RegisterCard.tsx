@@ -44,7 +44,7 @@ export default function RegisterCard() {
   };
 
   return (
-    <Card className="w-[400px]">
+    <Card className="w-[400px] hover:scale-105 transition-all duration-300 hover:shadow-xl">
       <CardHeader>
         <CardTitle className="text-xl">Register</CardTitle>
         <CardDescription>

@@ -7,7 +7,9 @@ export default async function AllTickets() {
 
   if (!allTickets || (allTickets && allTickets.length === 0))
     return (
-      <div className="flex vertical-center items-center">No Tickets Found</div>
+      <div className="flex vertical-center items-center justify-center font-semibold text-2xl text-gray-500">
+        No Tickets Found...
+      </div>
     );
 
   return (

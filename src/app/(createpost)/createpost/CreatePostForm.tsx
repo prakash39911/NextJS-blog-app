@@ -84,7 +84,7 @@ export default function CreatePostForm() {
   };
 
   return (
-    <div className="overflow-y-auto px-3 h-5/6 bg-gray-100 w-2/3 p-2 rounded-md shadow-md shadow-gray-300">
+    <div className="overflow-y-auto px-3 bg-gray-100 w-2/3 p-2 rounded-md shadow-md shadow-blue-400">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -110,7 +110,7 @@ export default function CreatePostForm() {
               </FormItem>
             )}
           />
-          <div className="flex flex-row items-center justify-between">
+          <div className="flex flex-row items-center justify-between relative">
             <div>
               <FormField
                 control={form.control}
@@ -130,7 +130,7 @@ export default function CreatePostForm() {
                 )}
               />
             </div>
-            <div>
+            <div className="relative top-3">
               {image.public_id && (
                 <div className="flex flex-row items-center gap-2">
                   <CldImage
@@ -156,7 +156,7 @@ export default function CreatePostForm() {
             </div>
           </div>
 
-          <FormField
+          {/* <FormField
             control={form.control}
             name="video"
             render={({ field }) => (
@@ -172,7 +172,7 @@ export default function CreatePostForm() {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
           <FormField
             control={form.control}
             name="content"

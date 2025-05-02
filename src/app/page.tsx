@@ -15,8 +15,8 @@ export default async function Home() {
     return <HomePageCard isLoggedIn={isLoggedIn} />;
 
   return (
-    <div className="bg-gray-800 vertical-center">
-      <div className="container mx-auto bg-gray-800">
+    <div className="bg-gray-200 vertical-center relative">
+      <div className="container mx-auto bg-gray-200 relative top-4 rounded-lg">
         {allBlogs && <CarouselComponent allBlogs={allBlogs} />}
       </div>
     </div>

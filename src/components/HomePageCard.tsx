@@ -15,13 +15,17 @@ export default function HomePageCard({ isLoggedIn }: { isLoggedIn: boolean }) {
               ? "Please explore all the blogs"
               : "Please Login to Explore all the Features"}
           </div>
-          <div className="flex flex-row gap-5">
+          <div>
             {isLoggedIn ? (
               ""
             ) : (
-              <div>
-                <LoginButton />
-                <RegisterButton />
+              <div className="flex flex-col items-center justify-center gap-2">
+                <div>
+                  <LoginButton />
+                </div>
+                <div>
+                  <RegisterButton />
+                </div>
               </div>
             )}
           </div>

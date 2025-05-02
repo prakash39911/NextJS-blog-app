@@ -12,9 +12,9 @@ export default function BlogLogo() {
       onClick={() => router.push("/")}
     >
       <span>
-        <FaBlog className="text-gray-200" size={28} />
+        <FaBlog size={28} />
       </span>
-      <span className="font-bold text-4xl text-gray-200">Blog</span>
+      <span className="font-bold text-4xl">Blog</span>
     </div>
   );
 }

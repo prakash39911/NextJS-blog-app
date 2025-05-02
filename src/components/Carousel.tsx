@@ -32,7 +32,7 @@ export function CarouselComponent({ allBlogs }: { allBlogs: blogType[] }) {
             <CarouselItem key={blog.id}>
               <div>
                 <Card
-                  className="bg-gray-800 border-none cursor-pointer"
+                  className="bg-gray-200 border-none cursor-pointer"
                   onClick={() => router.push(`/blog/${blog.id}`)}
                 >
                   <CardContent className="flex aspect-video">

@@ -152,3 +152,30 @@ export const getAllBlogsForParticularUser = async (userId: string) => {
     console.log(error);
   }
 };
+
+export const getBlogForTrendingTab = async () => {
+  try {
+    const allBlog = await prisma.blog.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      take: 4,
+    });
+
+    const reStructuredBlogData = allBlog?.map((eachBlog) => ({
+      id: eachBlog.id,
+      title: eachBlog.title,
+      image: eachBlog.image,
+      date: eachBlog.createdAt.toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }),
+      readTime: `${Math.ceil(eachBlog.content.length / 600)} min read`,
+    }));
+
+    return reStructuredBlogData;
+  } catch (error) {
+    console.log(error);
+  }
+};

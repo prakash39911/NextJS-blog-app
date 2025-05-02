@@ -29,10 +29,10 @@ export default function NavItems({
             <Link href={href} legacyBehavior passHref>
               <NavigationMenuLink
                 className={clsx(
-                  "bg-none px-4 py-2 rounded-lg transition-colors",
+                  "bg-none px-4 py-1.5 rounded-lg transition-colors",
                   isActive
                     ? "bg-gray-800 text-gray-200"
-                    : "text-gray-300 hover:bg-gray-700"
+                    : "text-gray-900 hover:bg-gray-800 hover:text-gray-200"
                 )}
               >
                 {label}

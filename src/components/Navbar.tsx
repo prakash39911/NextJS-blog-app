@@ -28,7 +28,7 @@ export default async function Navbar() {
   const links = isAdmin ? adminLink : memberLink;
 
   return (
-    <div className="bg-gray-600 p-4">
+    <div className="bg-white p-4">
       <div className="flex flex-row justify-between items-center mx-8">
         <BlogLogo />
         <div className="flex flex-row gap-6">

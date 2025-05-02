@@ -36,7 +36,7 @@ export default function InfinitePaginationComponent({
 
       setHasMore(newBlogs.length > 0);
     } catch (error) {
-      console.error("Error loading blogs:", error);
+      console.log("Error loading blogs:", error);
     } finally {
       setIsLoading(false);
     }

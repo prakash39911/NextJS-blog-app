@@ -23,6 +23,7 @@ import { getCurrentUserSessionData } from "@/app/actions/authActions";
 
 export default function LoginCard() {
   const router = useRouter();
+  const [loginError, setLoginError] = React.useState<string | null>(null);
 
   const {
     register,
@@ -34,6 +35,7 @@ export default function LoginCard() {
   });
 
   const onActualSubmit = async (data: loginSchameType) => {
+    setLoginError(null); // Clear previous errors
     const signInResponse = await signIn("credentials", {
       email: data.email,
       password: data.password,
@@ -41,7 +43,7 @@ export default function LoginCard() {
     });
 
     if (signInResponse?.error) {
-      console.error("Login failed:", signInResponse.error);
+      setLoginError("Invalid email or password. Please try again.");
       return;
     }
 
@@ -61,7 +63,7 @@ export default function LoginCard() {
   };
 
   return (
-    <Card className="w-[400px]">
+    <Card className="w-[400px] hover:scale-105 transition-all duration-300 hover:shadow-lg">
       <CardHeader>
         <CardTitle className="text-xl">Login</CardTitle>
         <CardDescription>
@@ -77,6 +79,11 @@ export default function LoginCard() {
       <CardContent>
         <form onSubmit={handleSubmit(onActualSubmit)}>
           <div className="grid w-full items-center gap-4">
+            {loginError && (
+              <div className="text-sm text-red-600 text-center p-2 bg-red-50 rounded-md">
+                {loginError}
+              </div>
+            )}
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="name">Email</Label>
               <Input

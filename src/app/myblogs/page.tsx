@@ -22,7 +22,7 @@ export default async function page({
 
   if (!allBlogs || !count || (allBlogs && allBlogs.length === 0))
     return (
-      <div className="flex vertical-center justify-center items-center flex-col">
+      <div className="flex vertical-center justify-center items-center flex-col text-xl text-gray-500">
         You have not created any Blogs!
         <Link
           href="/createpost"
