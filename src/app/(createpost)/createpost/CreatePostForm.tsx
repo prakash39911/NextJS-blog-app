@@ -88,7 +88,7 @@ export default function CreatePostForm() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-8"
+          className="flex flex-col gap-4"
         >
           <FormField
             control={form.control}

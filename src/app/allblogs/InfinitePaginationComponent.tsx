@@ -72,7 +72,7 @@ export default function InfinitePaginationComponent({
       ))}
 
       {/* Loading indicator and intersection observer target */}
-      <div className="w-full py-6 flex justify-center">
+      <div className="w-full py-3 flex justify-center">
         {isLoading && (
           <div className="flex items-center gap-2">
             <LoadingSpinner />

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function LoadingSpinner({ size = 11 }) {
+export default function LoadingSpinner({ size = 9 }) {
   return (
     <div className="flex items-center justify-center">
       <div
