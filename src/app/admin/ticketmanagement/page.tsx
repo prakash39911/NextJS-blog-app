@@ -13,7 +13,7 @@ export default async function Ticket() {
     );
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container px-48 py-10">
       <TabsComponent allTickets={allTickets} />
     </div>
   );

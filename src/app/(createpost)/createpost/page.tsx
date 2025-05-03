@@ -27,10 +27,8 @@ export default async function CreatePost() {
     );
 
   return (
-    <div className="flex flex-col gap-5 items-center justify-center vertical-center">
-      <div className="flex justify-center">
-        <h1 className="text-4xl text-gray-700">Create Post</h1>
-      </div>
+    <div className="flex flex-col gap-5 items-center mt-10">
+      <h1 className="text-4xl text-gray-700">Create Post</h1>
       <CreatePostForm />
     </div>
   );

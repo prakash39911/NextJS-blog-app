@@ -6,7 +6,7 @@ import { getCurrentUserId } from "./authActions";
 export async function getAllBlog(pageNumber?: number, pageSize?: number) {
   try {
     const page = pageNumber || 1;
-    const limit = pageSize || 5;
+    const limit = pageSize || 4;
 
     const skip = (page - 1) * limit;
 

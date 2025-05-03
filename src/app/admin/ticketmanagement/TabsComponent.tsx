@@ -44,7 +44,7 @@ export default function TabsComponent({
             Resolved
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="pending">
+        <TabsContent value="pending" className=" flex gap-3 flex-col">
           <CardContainer
             cardTitle={cardTitle}
             cssStyle={
@@ -61,7 +61,7 @@ export default function TabsComponent({
               })}
           </CardContainer>
         </TabsContent>
-        <TabsContent value="resolved">
+        <TabsContent value="resolved" className="flex gap-3 flex-col">
           <CardContainer
             cardTitle={cardTitle}
             cssStyle={

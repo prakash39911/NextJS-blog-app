@@ -24,7 +24,7 @@ export default async function page({
   );
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container px-48 py-10">
       {allBlogs && (
         <TabsComponent
           allBlogs={allBlogs}

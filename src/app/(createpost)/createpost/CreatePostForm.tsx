@@ -20,10 +20,12 @@ import { useFormStore } from "@/hooks/FormStore";
 import { CreatePost, DeleteCloudinaryImage } from "@/app/actions/userActions";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function CreatePostForm() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const { image, video, title, content, reset } = useFormStore();
   const { setImage, setVideo, setTitle, setContent } = useFormStore();
 
@@ -55,6 +57,7 @@ export default function CreatePostForm() {
   };
 
   const onSubmit = async (data: FormSchemaType) => {
+    setIsLoading(true);
     const modifiedData = {
       ...data,
       image: image.url || "",
@@ -80,6 +83,8 @@ export default function CreatePostForm() {
     } catch (error) {
       toast.error("An error occurred while creating the blog");
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -194,10 +199,11 @@ export default function CreatePostForm() {
           />
           <Button
             type="submit"
+            disabled={isLoading}
             variant="outline"
             className="mt-2 bg-gray-500 text-gray-50 font-semibold hover:bg-gray-600"
           >
-            Submit
+            {isLoading ? <LoadingSpinner size={6} /> : "Submit"}
           </Button>
         </form>
       </Form>
