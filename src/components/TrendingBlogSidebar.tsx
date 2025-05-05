@@ -1,12 +1,42 @@
+"use client";
+
 import { getBlogForTrendingTab } from "@/app/actions/blogActions";
+import { redirect, useRouter } from "next/navigation";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import LoadingSpinner from "./LoadingSpinner";
 
-const TrendingBlogsSidebar = async () => {
-  const trendingBlogs = await getBlogForTrendingTab();
+interface blogDataType {
+  id: string;
+  title: string;
+  image: string | null;
+  date: string;
+  readTime: string;
+}
 
-  if (!trendingBlogs) {
-    return;
+const TrendingBlogsSidebar = () => {
+  const [trendingBlogs, setTrendingBlogs] = useState<blogDataType[] | null>(
+    null
+  );
+  const [isLoading, setIsLoading] = useState(true);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getBlogForTrendingTab();
+
+      if (data) {
+        setTrendingBlogs(data);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
   }
 
   return (
@@ -17,8 +47,12 @@ const TrendingBlogsSidebar = async () => {
         </h2>
 
         <div className="space-y-5">
-          {trendingBlogs.map((blog) => (
-            <div key={blog.id} className="flex gap-3 group">
+          {trendingBlogs?.map((blog) => (
+            <div
+              key={blog.id}
+              className="flex gap-3 group"
+              onClick={() => router.push(`/blog/${blog.id}`)}
+            >
               <div className="flex-shrink-0">
                 {blog.image && (
                   <Image
